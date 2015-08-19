@@ -1,18 +1,20 @@
-AtomGithubNotifications = require '../lib/atom-github-notifications'
+# TODO: Fix model spec
+
+AtomGithubNotifications = require '../lib/github-notifications'
 
 # Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 #
 # To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
-describe "AtomGithubNotifications", ->
+describe "GithubNotifications", ->
   [workspaceElement, activationPromise] = []
 
   beforeEach ->
     workspaceElement = atom.views.getView(atom.workspace)
-    activationPromise = atom.packages.activatePackage('atom-github-notifications')
+    activationPromise = atom.packages.activatePackage('github-notifications')
 
-  describe "when the atom-github-notifications:toggle event is triggered", ->
+  describe "when the github-notifications:toggle event is triggered", ->
     it "hides and shows the modal panel", ->
       # Before the activation event the view is not on the DOM, and no panel
       # has been created
@@ -56,7 +58,7 @@ describe "AtomGithubNotifications", ->
 
       runs ->
         # Now we can test for view visibility
-        atomGithubNotificationsElement = workspaceElement.querySelector('.atom-github-notifications')
+        githubNotificationsElement = workspaceElement.querySelector('.github-notifications')
         expect(atomGithubNotificationsElement).toBeVisible()
         atom.commands.dispatch workspaceElement, 'atom-github-notifications:toggle'
         expect(atomGithubNotificationsElement).not.toBeVisible()

@@ -1,18 +1,22 @@
 {
-  "name": "atom-github-notifications",
-  "main": "./lib/atom-github-notifications",
+  "name": "github-notifications",
+  "main": "./lib/github-notifications",
   "version": "0.0.0",
   "description": "A short description of your package",
-  "keywords": [
-  ],
-  "activationCommands": {
-    "atom-workspace": "atom-github-notifications:toggle"
-  },
+  "keywords": [],
   "repository": "https://github.com/atom/atom-github-notifications",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
+  "consumedServices": {
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
+  },
   "dependencies": {
+    "request": "^2.60.0"
   }
 }

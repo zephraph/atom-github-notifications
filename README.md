@@ -1,5 +1,11 @@
-# atom-github-notifications package
+# Github Notifications package for Atom
 
-A short description of your package.
+**Note: This package is still in development and is not currently functional.**
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+This package allows you to see your GitHub notifications from within Atom.
+
+To set this package up
+
+1. Create a new [personal access token](https://github.com/settings/tokens/new) with _only_ notifications access.
+2. Copy the token into the package's settings
+3. Enjoy the notifications
