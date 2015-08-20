@@ -17,6 +17,9 @@
     }
   },
   "dependencies": {
+    "bluebird": "^2.9.34",
+    "event-kit": "^1.2.0",
+    "lodash": "^3.10.1",
     "request": "^2.60.0"
   }
 }

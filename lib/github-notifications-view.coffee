@@ -1,24 +1,21 @@
 module.exports =
 class GithubNotificationsView
-  constructor: (serializedState) ->
+  constructor: ->
 
     # Create root element
-    @element = document.createElement('div')
-    @element.classList.add('github-notifications')
-    @element.classList.add('inline-block')
+    @element = document.createElement 'div'
+    @element.classList.add 'github-notifications'
+    @element.classList.add 'inline-block'
 
-    icon = document.crateElement('span')
-    icon.classList.add('icon icon-inbox')
-    @element.appendChild(icon)
+    icon = document.createElement 'span'
+    icon.classList.add 'icon', 'icon-inbox'
+    @element.appendChild icon
 
   show: ->
     @element.style.display = ''
 
   hide: ->
     @element.style.display = 'none'
-
-  # Returns an object that can be retrieved when package is activated
-  serialize: ->
 
   # Tear down any state and detach
   destroy: ->
@@ -27,4 +24,15 @@ class GithubNotificationsView
   getElement: ->
     @element
 
-  consumeStatusBar: (statusBar) ->
+  addTile: ->
+    if atom.config.get('github-notifications.side') is 'right'
+      @tile = @statusBar?.addRightTile item: @element, priority: atom.config.get 'github-notifications.priority'
+    else
+      @tile = @statusBar?.addLeftTile item: @element, priority: atom.config.get 'github-notifications.priority'
+
+  updatePosition: ->
+    @tile?.destroy()
+    @addTile()
+
+  consumeStatusBar: (@statusBar) ->
+    @addTile()
