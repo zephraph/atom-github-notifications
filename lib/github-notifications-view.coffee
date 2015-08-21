@@ -7,9 +7,10 @@ class GithubNotificationsView
     @element.classList.add 'github-notifications'
     @element.classList.add 'inline-block'
 
-    icon = document.createElement 'span'
-    icon.classList.add 'icon', 'icon-inbox'
-    @element.appendChild icon
+    @icon = document.createElement 'span'
+    @icon.innerHTML = '5'
+    @icon.classList.add 'icon', 'icon-inbox'
+    @element.appendChild @icon
 
   show: ->
     @element.style.display = ''
@@ -19,7 +20,9 @@ class GithubNotificationsView
 
   # Tear down any state and detach
   destroy: ->
+    @icon = null
     @element.remove()
+    @element = null
 
   getElement: ->
     @element

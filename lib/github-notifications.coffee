@@ -39,8 +39,7 @@ module.exports = GithubNotifications =
           @githubNotificationsView.hide()
 
     @subscriptions.add github.onDidError (error) ->
-      errorNotification = new Notification 'error', error
-      atom.notifications.addNotification errorNotification
+      atom.notifications.addError error
 
     @subscriptions.add atom.commands.add 'atom-workspace',
       'github-notifications:refresh': ->
@@ -51,15 +50,20 @@ module.exports = GithubNotifications =
       if event.keyPath in ['github-notifications.side', 'github-notifications.priority']
         @githubNotificationsView.updatePosition()
       if event.keyPath is 'github-notifications.pollRate'
-        @resetTimer()
+        @resetPoll()
 
-    @initializeTimer()
+    @poll()
+    @checkForNotifications()
 
-  initializeTimer: ->
-    @timer = setTimeout @checkForNotifications, parseInt(atom.config.get 'github-notifications.pollRate') * 1000
+  poll: ->
+    @timer = setInterval @checkForNotifications, parseInt(atom.config.get 'github-notifications.pollRate') * 1000
 
-  resetTimer: ->
-    clearTimeout @timer
+  resetPoll: ->
+    @stopPoll()
+    @poll()
+
+  stopPoll: ->
+    clearInterval @timer
 
   checkForNotifications: ->
     if github.config.headers.Authorization?
@@ -72,8 +76,7 @@ module.exports = GithubNotifications =
 
     else
       if not @hasWarned
-        warning = new Notification 'warning', 'GithubNotifications package has no authorization token.'
-        atom.notifications.addNotification warning
+        atom.notifications.addWarning 'GithubNotifications package has no authorization token.'
         @hasWarned = true
 
   deactivate: ->
