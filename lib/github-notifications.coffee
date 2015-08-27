@@ -13,6 +13,7 @@ module.exports = GithubNotifications =
     notificationAuthToken:
       type: 'string'
       description: 'A GitHub Personal Access Token with notification permissions.'
+      default: ''
     pollRate:
       type: 'integer'
       description: 'The amount of time in seconds between checking for the latest updates'
@@ -20,6 +21,7 @@ module.exports = GithubNotifications =
     priority:
       type: 'integer'
       description: 'The higher the priority, the closer to the edge of the screen the icon will appear'
+      default: 100
     side:
       type: 'string'
       description: 'Which side of the statusbar the icon should appear on'
@@ -33,10 +35,7 @@ module.exports = GithubNotifications =
     @subscriptions = new CompositeDisposable
     @subscriptions.add github.onDidUpdate (route, response, info) ->
       if route is '/notifications' and response.statusCode is 200
-        if info.length > 0
-          @githubNotificationsView.show()
-        else
-          @githubNotificationsView.hide()
+        @githubNotificationsView.update info
 
     @subscriptions.add github.onDidError (error) ->
       atom.notifications.addError error
@@ -69,15 +68,16 @@ module.exports = GithubNotifications =
     if github.config.headers.Authorization?
       github.request '/notifications'
 
-    else if atom.config.get('github-notifications.notificationAuthToken')?
-      auth = atom.config.get 'github-notifications.notificationAuthToken'
-      github.config.headers.Authorization = auth
-      @checkForNotifications
-
     else
-      if not @hasWarned
-        atom.notifications.addWarning 'GithubNotifications package has no authorization token.'
-        @hasWarned = true
+      authToken = atom.config.get 'github-notifications.notificationAuthToken'
+
+      if authToken isnt ''
+        github.config.headers.Authorization = authToken
+        @checkForNotifications
+
+      else if not @hasWarned
+          atom.notifications.addWarning 'GithubNotifications package has no authorization token.'
+          @hasWarned = true
 
   deactivate: ->
     @subscriptions.dispose()

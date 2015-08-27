@@ -8,15 +8,16 @@ class GithubNotificationsView
     @element.classList.add 'inline-block'
 
     @icon = document.createElement 'span'
-    @icon.innerHTML = '5'
     @icon.classList.add 'icon', 'icon-inbox'
     @element.appendChild @icon
 
-  show: ->
-    @element.style.display = ''
-
-  hide: ->
-    @element.style.display = 'none'
+  update: (notifications) ->
+    if notifications.length > 0
+      @element.classList.add 'has-notifications'
+      @icon.innerHTML = notifications.length
+    else
+      @element.classList.remove 'has-notifications'
+      @icon.innerHTML = ''
 
   # Tear down any state and detach
   destroy: ->
