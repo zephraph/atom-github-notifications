@@ -1,6 +1,6 @@
 module.exports =
 class GithubNotificationsView
-  constructor: ->
+  constructor: (@side = 'right', @priority = 100) ->
 
     # Create root element
     @element = document.createElement 'div'
@@ -11,12 +11,12 @@ class GithubNotificationsView
     @icon.classList.add 'icon', 'icon-inbox'
     @element.appendChild @icon
 
-  update: (notifications) ->
+  update: (notifications = []) ->
     if notifications.length > 0
-      @element.classList.add 'has-notifications'
+      @icon.classList.add 'has-notifications'
       @icon.innerHTML = notifications.length
     else
-      @element.classList.remove 'has-notifications'
+      @icon.classList.remove 'has-notifications'
       @icon.innerHTML = ''
 
   # Tear down any state and detach
@@ -29,10 +29,10 @@ class GithubNotificationsView
     @element
 
   addTile: ->
-    if atom.config.get('github-notifications.side') is 'right'
-      @tile = @statusBar?.addRightTile item: @element, priority: atom.config.get 'github-notifications.priority'
+    if @side is 'right'
+      @tile = @statusBar?.addRightTile item: @element, priority: @priority
     else
-      @tile = @statusBar?.addLeftTile item: @element, priority: atom.config.get 'github-notifications.priority'
+      @tile = @statusBar?.addLeftTile item: @element, priority: @priority
 
   updatePosition: ->
     @tile?.destroy()

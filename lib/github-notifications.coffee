@@ -29,7 +29,10 @@ module.exports = GithubNotifications =
       enum: ['left', 'right']
 
   activate: (state) ->
-    @githubNotificationsView = new GithubNotificationsView
+    @githubNotificationsView = new GithubNotificationsView (
+      atom.config.get 'github-notifications.side'
+      atom.config.get 'github-notifications.priority'
+    )
     @githubNotificationsView.addTile()
 
     @subscriptions = new CompositeDisposable

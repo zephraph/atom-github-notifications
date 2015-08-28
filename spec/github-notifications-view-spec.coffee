@@ -25,3 +25,13 @@ describe 'GithubNotificationsView', ->
     statusBar.getRightTiles().forEach (tile) ->
       elements.push tile.item
     expect(elements).toContain(view.element)
+    expect(view.icon.classList.contains 'has-notifications').toBe true
+
+  it 'should not show the notification icon if there are no notifications', ->
+    elements = []
+
+    view.update()
+    statusBar.getRightTiles().forEach (tile) ->
+      elements.push tile.item
+    expect(elements).toContain(view.element)
+    expect(view.icon.classList.contains 'has-notifications').toBe false
