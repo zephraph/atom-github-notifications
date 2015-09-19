@@ -36,8 +36,11 @@ module.exports = GithubNotifications =
     @githubNotificationsView.addTile()
 
     @subscriptions = new CompositeDisposable
-    @subscriptions.add github.onDidUpdate (route, response, info) ->
+    @subscriptions.add github.onDidUpdate ([route, response, info]) ->
+      console.log 'updating'
+      console.log 'response:', response
       if route is '/notifications' and response.statusCode is 200
+        console.log 'updating notification'
         @githubNotificationsView.update info
 
     @subscriptions.add github.onDidError (error) ->
@@ -54,8 +57,8 @@ module.exports = GithubNotifications =
       if event.keyPath is 'github-notifications.pollRate'
         @resetPoll()
 
-    @poll()
     @checkForNotifications()
+    @poll()
 
   poll: ->
     @timer = setInterval @checkForNotifications, parseInt(atom.config.get 'github-notifications.pollRate') * 1000
@@ -68,14 +71,14 @@ module.exports = GithubNotifications =
     clearInterval @timer
 
   checkForNotifications: ->
-    if github.config.headers.Authorization?
+    if github.hasAuthToken()
       github.request '/notifications'
 
     else
       authToken = atom.config.get 'github-notifications.notificationAuthToken'
 
       if authToken isnt ''
-        github.config.headers.Authorization = authToken
+        github.setAuthToken authToken
         @checkForNotifications
 
       else if not @hasWarned

@@ -8,10 +8,11 @@ class GithubNotificationsView
     @element.classList.add 'inline-block'
 
     @icon = document.createElement 'span'
-    @icon.classList.add 'icon', 'icon-inbox'
+    @icon.classList.add 'icon', 'icon-bell'
     @element.appendChild @icon
 
   update: (notifications = []) ->
+    console.log 'notifications:', notifications
     if notifications.length > 0
       @icon.classList.add 'has-notifications'
       @icon.innerHTML = notifications.length
