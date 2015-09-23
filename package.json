@@ -1,8 +1,8 @@
 {
   "name": "github-notifications",
   "main": "./lib/github-notifications",
-  "version": "0.0.0",
-  "description": "A short description of your package",
+  "version": "0.1.0",
+  "description": "An Atom package to notify you when you have awaiting github notifications",
   "keywords": [],
   "repository": "https://github.com/atom/atom-github-notifications",
   "license": "MIT",
