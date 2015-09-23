@@ -1,8 +1,6 @@
-GitHub = require '../lib/github'
-notificationKey = '44b8240e5fbbfca6a71f18e1fad5c91d6bb57bef'
+GitHub = require './fixtures/github-stub'
 
 github = new GitHub
-github.setAuthToken notificationKey
 
 describe 'The GitHub API interface', ->
 

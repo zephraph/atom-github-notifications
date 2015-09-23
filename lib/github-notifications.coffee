@@ -29,14 +29,14 @@ module.exports = GithubNotifications =
       enum: ['left', 'right']
 
   activate: (state) ->
-    @githubNotificationsView = new GithubNotificationsView (
+    @githubNotificationsView = new GithubNotificationsView(
       atom.config.get 'github-notifications.side'
       atom.config.get 'github-notifications.priority'
     )
     @githubNotificationsView.addTile()
 
     @subscriptions = new CompositeDisposable
-    @subscriptions.add github.onDidUpdate ([route, response, info]) ->
+    @subscriptions.add github.onDidUpdate ([route, response, info]) =>
       console.log 'updating'
       console.log 'response:', response
       if route is '/notifications' and response.statusCode is 200
@@ -51,7 +51,7 @@ module.exports = GithubNotifications =
         @hasWarned = false
         @checkForNotifications()
 
-    @subscriptions.add atom.config.onDidChange 'github-notifications', (event) ->
+    @subscriptions.add atom.config.onDidChange 'github-notifications', (event) =>
       if event.keyPath in ['github-notifications.side', 'github-notifications.priority']
         @githubNotificationsView.updatePosition()
       if event.keyPath is 'github-notifications.pollRate'
