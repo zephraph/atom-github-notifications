@@ -76,7 +76,7 @@ module.exports = GithubNotifications =
 
       if authToken isnt ''
         github.setAuthToken authToken
-        @checkForNotifications()
+        @checkForNotifications?()
 
       else if not @hasWarned
           atom.notifications.addWarning 'GithubNotifications package has no authorization token.'
