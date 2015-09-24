@@ -21,7 +21,7 @@ module.exports = GithubNotifications =
     priority:
       type: 'integer'
       description: 'The higher the priority, the closer to the edge of the screen the icon will appear'
-      default: 100
+      default: 0
     side:
       type: 'string'
       description: 'Which side of the statusbar the icon should appear on'
@@ -37,10 +37,7 @@ module.exports = GithubNotifications =
 
     @subscriptions = new CompositeDisposable
     @subscriptions.add github.onDidUpdate ([route, response, info]) =>
-      console.log 'updating'
-      console.log 'response:', response
       if route is '/notifications' and response.statusCode is 200
-        console.log 'updating notification'
         @githubNotificationsView.update info
 
     @subscriptions.add github.onDidError (error) ->
@@ -79,7 +76,7 @@ module.exports = GithubNotifications =
 
       if authToken isnt ''
         github.setAuthToken authToken
-        @checkForNotifications
+        @checkForNotifications()
 
       else if not @hasWarned
           atom.notifications.addWarning 'GithubNotifications package has no authorization token.'
