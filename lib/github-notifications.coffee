@@ -2,6 +2,8 @@ GithubNotificationsView = require './github-notifications-view'
 {CompositeDisposable} = require 'atom'
 GitHub = require './github'
 
+require('marko/node-require').install()
+
 github = new GitHub
 
 module.exports = GithubNotifications =

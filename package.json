@@ -20,6 +20,8 @@
     "bluebird": "^2.9.34",
     "event-kit": "^1.2.0",
     "lodash": "^3.10.1",
+    "marko": "^2.7.27",
+    "marko-widgets": "^5.0.3",
     "request": "^2.60.0"
   }
 }
