@@ -44,7 +44,7 @@ module.exports = GithubNotifications =
       atom.notifications.addError error
 
     @subscriptions.add atom.commands.add 'atom-workspace',
-      'github-notifications:refresh': ->
+      'github-notifications:refresh': =>
         @hasWarned = false
         @checkForNotifications()
 
