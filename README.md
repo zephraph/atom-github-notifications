@@ -1,6 +1,6 @@
 # Github Notifications for Atom
 
-This package allows you to see your if you have any awaiting GitHub notifications on atom's status bar.
+This package allows you to see your if you have any awaiting GitHub notifications on atom's status bar. It's not in active development at the moment, but I respond quickly to PRs. Feel free to pitch in!
 
 ### Installation
 
